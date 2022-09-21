@@ -3,10 +3,10 @@
 
 namespace HabitTracker
 {
-    static internal class Database
+    internal class Database
     {
         static string connectionString = @"Data Source=habit-Tracker.db";
-        static void CreateDatabase()
+        static internal void CreateDatabase()
         {
             /*Creating a connetion passing the the connection string as an argument
              * This will create the database for you, there's no need to manually create it.
@@ -20,7 +20,7 @@ namespace HabitTracker
                     connection.Open();
                     //Declaring what is that command (in SQL syntax)
                     tableCmd.CommandText =
-                        @"CREATE TABLE IF NOT EXISTS codingHoursPerDay (
+                        @"CREATE TABLE IF NOT EXISTS stepsPerDay (
                     Id INTEGER PRIMARY KEY AUTOINCREMENT,
                     Date TEXT,
                     Quantity INTEGER
