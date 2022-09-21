@@ -1,0 +1,5 @@
+﻿using HabitTracker;
+
+
+Database.CreateDatabase();
+
