@@ -2,7 +2,8 @@
   "profiles": {
     "HabitTracker": {
       "commandName": "Project",
-      "workingDirectory": "C:\\Users\\brent\\source\\repos\\HabitTracker"
+      "workingDirectory": "C:\\Users\\brent\\source\\repos\\HabitTracker",
+      "sqlDebugging": true
     }
   }
 }
