@@ -9,7 +9,7 @@ namespace HabitTracker
 {
     internal class Helpers
     {
-        static internal void ViewDB()
+        static internal void ViewDBAndStoreDB()
         {
             using (var connection = new SqliteConnection(Database.connectionString))
             {
