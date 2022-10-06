@@ -1,28 +1,27 @@
 ﻿using Microsoft.Data.Sqlite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 
 namespace HabitTracker
 {
     internal class Helpers
     {
-        static internal void ViewDBAndStoreDB()
+        static internal void ViewDB()
         {
-            using (var connection = new SqliteConnection(Database.connectionString))
-            {
-                //Creating the command to be sent to the database
-                using (var tableCmd = connection.CreateCommand())
-                {
-                    connection.Open();
-                    //Declaring what is that command (in SQL syntax)
-                    tableCmd.CommandText = $"SELECT Date, Quantity FROM stepsPerDay";
+            Console.Clear();
+            using var connection = new SqliteConnection(Database.connectionString);
+            
+            connection.Open();
 
-                    //Executing the command, which isn't a query, it's not asking to return data from the table.
+            string selectStatement = "SELECT * FROM stepsPerDay";
 
-                    tableCmd.ExecuteNonQuery();
-                }
+            using var cmd = new SqliteCommand(selectStatement, connection);
+            using SqliteDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            { 
+                Console.WriteLine($"ID: {rdr.GetInt32(0)} Date: {rdr.GetString(1)} Steps: {rdr.GetInt32(2)}");
+            }
+
+        }        
     }
 }

@@ -29,11 +29,20 @@ _______________________________");
                     case "i":
                         Database.Insert();
                         break;
+                    case "v":
+                        Helpers.ViewDB();
+                        Console.ReadLine();
+                        break;
+                    case "d":
+                        Database.Delete();
+                        break;
                     case "0":
                         gameRunning = false;
                         break;
                     default:
-                        Environment.Exit(1);
+                        Console.WriteLine("Please enter a valid input. Press enter to continue");
+                        Console.ReadLine();
+                        Console.Clear();
                         break;
                 }
             } while (gameRunning);

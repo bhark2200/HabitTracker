@@ -63,7 +63,11 @@ namespace HabitTracker
                 {
                     connection.Open();
                     //Declaring what is that command (in SQL syntax)
-                    tableCmd.CommandText = $"INSERT INTO stepsPerDay (Date, Quantity) VALUES ('{date}', {stepsForDay})";
+                    tableCmd.CommandText = $"INSERT INTO stepsPerDay (Date, Quantity) VALUES (@date, @stepsForDay)";
+                    tableCmd.Parameters.AddWithValue("@date", date);
+                    tableCmd.Parameters.AddWithValue("@stepsForDay", stepsForDay);
+                    tableCmd.Prepare();
+
 
                     //Executing the command, which isn't a query, it's not asking to return data from the table.
                     
@@ -76,17 +80,18 @@ namespace HabitTracker
         {
 
             Console.Clear();
-
-            int stepsForDay;
+            int rowToDelete;
             bool isNumber = true;
-            string date = DateTime.Now.ToString("d");
+
+            Helpers.ViewDB();
+            
 
             do
             {
-                Console.WriteLine($"Please enter the amount of steps for today: {date}.");
-                var stepsForDayString = Console.ReadLine();
+                Console.WriteLine("Please enter ID number of row to Delete.");
+                var rowToDeleteString = Console.ReadLine();
 
-                isNumber = int.TryParse(stepsForDayString, out stepsForDay);
+                isNumber = int.TryParse(rowToDeleteString, out rowToDelete);
                 if (isNumber == false)
                 {
                     Console.WriteLine("Invalid Input. Hit any key to reenter steps.");
@@ -99,18 +104,21 @@ namespace HabitTracker
 
             using (var connection = new SqliteConnection(connectionString))
             {
-                //Creating the command to be sent to the database
+                
                 using (var tableCmd = connection.CreateCommand())
                 {
                     connection.Open();
-                    //Declaring what is that command (in SQL syntax)
-                    tableCmd.CommandText = $"INSERT INTO stepsPerDay (Date, Quantity) VALUES ('{date}', {stepsForDay})";
-
-                    //Executing the command, which isn't a query, it's not asking to return data from the table.
-
+                    
+                    tableCmd.CommandText = $"DELETE FROM stepsPerDay WHERE ID = @id";
+                    tableCmd.Parameters.AddWithValue("@id", rowToDelete);
+                    tableCmd.Prepare();
+                                     
                     tableCmd.ExecuteNonQuery();
                 }
             }
+            Helpers.ViewDB();
+            Console.WriteLine("Row Deleted. Hit a enter to continue.");
+            Console.ReadLine();
         }
     }
 
