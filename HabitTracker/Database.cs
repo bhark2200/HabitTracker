@@ -4,8 +4,8 @@ namespace HabitTracker
 {
     internal class Database
     {
-        static internal string connectionString = @"Data Source=habit-Tracker.db";
-        static internal void CreateDatabase()
+        internal static string connectionString = @"Data Source=habit-Tracker.db";
+        internal static void CreateDatabase()
         {
             /*Creating a connetion passing the the connection string as an argument
              * This will create the database for you, there's no need to manually create it.
@@ -31,29 +31,14 @@ namespace HabitTracker
             }
         }
 
-        static internal void Insert()
+        internal static void Insert()
         {
 
             Console.Clear();
 
-            int stepsForDay;
-            bool isNumber = true;
             string date = DateTime.Now.ToString("d");
 
-            do
-            {
-                Console.WriteLine($"Please enter the amount of steps for today: {date}.");
-                var stepsForDayString = Console.ReadLine();
-
-                isNumber = int.TryParse(stepsForDayString, out stepsForDay);
-                if (isNumber == false)
-                {
-                    Console.WriteLine("Invalid Input. Hit any key to reenter steps.");
-                    Console.ReadLine();
-
-                }
-
-            } while (isNumber == false);
+            var stepsForDay = Helpers.IsANumberEntered($"Please enter the amount of steps for today: {date}.");
 
 
             using (var connection = new SqliteConnection(connectionString))
@@ -76,30 +61,14 @@ namespace HabitTracker
             }
         }
 
-        static internal void Delete()
+        internal static void Delete()
         {
 
             Console.Clear();
-            int rowToDelete;
-            bool isNumber = true;
 
             Helpers.ViewDB();
-            
 
-            do
-            {
-                Console.WriteLine("Please enter ID number of row to Delete.");
-                var rowToDeleteString = Console.ReadLine();
-
-                isNumber = int.TryParse(rowToDeleteString, out rowToDelete);
-                if (isNumber == false)
-                {
-                    Console.WriteLine("Invalid Input. Hit any key to reenter steps.");
-                    Console.ReadLine();
-
-                }
-
-            } while (isNumber == false);
+            var rowToDelete = Helpers.IsANumberEntered("Please enter ID number of row to Delete.");        
 
 
             using (var connection = new SqliteConnection(connectionString))
@@ -118,6 +87,36 @@ namespace HabitTracker
             }
             Helpers.ViewDB();
             Console.WriteLine("Row Deleted. Hit a enter to continue.");
+            Console.ReadLine();
+        }
+
+        internal static void Update()
+        {
+            Console.Clear();
+
+            Helpers.ViewDB();
+
+            var rowToUpdate = Helpers.IsANumberEntered("Please enter ID number of row to update.");
+            var stepsToUpdate = Helpers.IsANumberEntered("Please enter steps to update.");
+
+
+            using (var connection = new SqliteConnection(connectionString))
+            {
+
+                using (var tableCmd = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    tableCmd.CommandText = $"UPDATE stepsPerDay SET Quantity = @steps WHERE ID = @id";
+                    tableCmd.Parameters.AddWithValue("@steps", stepsToUpdate);
+                    tableCmd.Parameters.AddWithValue("@id", rowToUpdate);
+                    tableCmd.Prepare();
+
+                    tableCmd.ExecuteNonQuery();
+                }
+            }
+            Helpers.ViewDB();
+            Console.WriteLine("Row Updated. Hit a enter to continue.");
             Console.ReadLine();
         }
     }

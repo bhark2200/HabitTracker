@@ -10,6 +10,7 @@ namespace HabitTracker
     {
         internal static void Showmenu()
         {
+            Console.Clear();
             bool gameRunning = true;
             do
             {
@@ -32,6 +33,9 @@ _______________________________");
                     case "v":
                         Helpers.ViewDB();
                         Console.ReadLine();
+                        break;
+                    case "u":
+                        Database.Update();
                         break;
                     case "d":
                         Database.Delete();
