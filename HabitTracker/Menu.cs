@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace HabitTracker
 {
     internal class Menu
     {
         internal static void Showmenu()
         {
-            Console.Clear();
             bool gameRunning = true;
             do
             {
+                Console.Clear();
                 Console.WriteLine($@"
 Menu
 _______________________________

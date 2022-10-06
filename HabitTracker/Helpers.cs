@@ -46,7 +46,7 @@ ______________________________");
 
             while (rdr.Read())
             { 
-                Console.WriteLine($"{rdr.GetInt32(0)}  |  {rdr.GetString(1)}  |  {rdr.GetInt32(2)}");
+                Console.WriteLine($"{rdr.GetInt32(0)}    {rdr.GetString(1)}    {rdr.GetInt32(2)}");
             }
 
         }        

@@ -7,10 +7,6 @@ namespace HabitTracker
         internal static string connectionString = @"Data Source=habit-Tracker.db";
         internal static void CreateDatabase()
         {
-            /*Creating a connetion passing the the connection string as an argument
-             * This will create the database for you, there's no need to manually create it.
-             * And no need to use File.Create().*/
-
             using (var connection = new SqliteConnection(connectionString))
             {
                 //Creating the command to be sent to the database
@@ -25,7 +21,6 @@ namespace HabitTracker
                     Quantity INTEGER
                     )";
 
-                    //Executing the command, which isn't a query, it's not asking to return data from the table.
                     tableCmd.ExecuteNonQuery();
                 }
             }
@@ -43,19 +38,16 @@ namespace HabitTracker
 
             using (var connection = new SqliteConnection(connectionString))
             {
-                //Creating the command to be sent to the database
+                
                 using (var tableCmd = connection.CreateCommand())
                 {
                     connection.Open();
-                    //Declaring what is that command (in SQL syntax)
-                    tableCmd.CommandText = $"INSERT INTO stepsPerDay (Date, Quantity) VALUES (@date, @stepsForDay)";
+                    
+                    tableCmd.CommandText = "INSERT INTO stepsPerDay (Date, Quantity) VALUES (@date, @stepsForDay)";
                     tableCmd.Parameters.AddWithValue("@date", date);
                     tableCmd.Parameters.AddWithValue("@stepsForDay", stepsForDay);
                     tableCmd.Prepare();
-
-
-                    //Executing the command, which isn't a query, it's not asking to return data from the table.
-                    
+                                                                              
                     tableCmd.ExecuteNonQuery();
                 }
             }
@@ -78,7 +70,7 @@ namespace HabitTracker
                 {
                     connection.Open();
                     
-                    tableCmd.CommandText = $"DELETE FROM stepsPerDay WHERE ID = @id";
+                    tableCmd.CommandText = "DELETE FROM stepsPerDay WHERE ID = @id";
                     tableCmd.Parameters.AddWithValue("@id", rowToDelete);
                     tableCmd.Prepare();
                                      
@@ -107,7 +99,7 @@ namespace HabitTracker
                 {
                     connection.Open();
 
-                    tableCmd.CommandText = $"UPDATE stepsPerDay SET Quantity = @steps WHERE ID = @id";
+                    tableCmd.CommandText = "UPDATE stepsPerDay SET Quantity = @steps WHERE ID = @id";
                     tableCmd.Parameters.AddWithValue("@steps", stepsToUpdate);
                     tableCmd.Parameters.AddWithValue("@id", rowToUpdate);
                     tableCmd.Prepare();
