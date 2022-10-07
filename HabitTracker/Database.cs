@@ -57,11 +57,14 @@ namespace HabitTracker
         {
 
             Console.Clear();
-
+            bool idCheck;
+            int rowToDelete;
             Helpers.ViewDB();
-
-            var rowToDelete = Helpers.IsANumberEntered("Please enter ID number of row to Delete.");        
-
+            do
+            {
+                rowToDelete = Helpers.IsANumberEntered("Please enter ID number of row to Delete.");
+                idCheck = Helpers.CheckIfIdIsThere(rowToDelete);
+            } while (!idCheck);
 
             using (var connection = new SqliteConnection(connectionString))
             {
@@ -84,11 +87,16 @@ namespace HabitTracker
 
         internal static void Update()
         {
-            Console.Clear();
 
             Helpers.ViewDB();
-
-            var rowToUpdate = Helpers.IsANumberEntered("Please enter ID number of row to update.");
+            int rowToUpdate;
+            bool idCheck;
+            do 
+            {
+                rowToUpdate = Helpers.IsANumberEntered("Please enter ID number of row to update.");
+                idCheck= Helpers.CheckIfIdIsThere(rowToUpdate);
+            }while (!idCheck);
+            
             var stepsToUpdate = Helpers.IsANumberEntered("Please enter steps to update.");
 
 
@@ -108,7 +116,7 @@ namespace HabitTracker
                 }
             }
             Helpers.ViewDB();
-            Console.WriteLine("Row Updated. Hit a enter to continue.");
+            Console.WriteLine("Row Updated. Hit enter to continue.");
             Console.ReadLine();
         }
     }

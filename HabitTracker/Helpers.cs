@@ -1,11 +1,14 @@
 ﻿using Microsoft.Data.Sqlite;
 using System.Data;
+using System.Net.Sockets;
 
 namespace HabitTracker
 {
     internal class Helpers
     {
+        internal static List<int> IdList = new List<int>();
         internal static int IsANumberEntered(string message)
+        
         {
             bool isNumber = true;
             int intToReturn;
@@ -30,9 +33,10 @@ namespace HabitTracker
             return intToReturn;
         }
 
-        static internal void ViewDB()
+        internal static  void ViewDB()
         {
             Console.Clear();
+            IdList.Clear();
             using var connection = new SqliteConnection(Database.connectionString);
             
             connection.Open();
@@ -43,12 +47,29 @@ namespace HabitTracker
             using SqliteDataReader rdr = cmd.ExecuteReader();
             Console.WriteLine($@"ID       Date        Steps
 ______________________________");
-
+            
             while (rdr.Read())
-            { 
+            {
+                
+                IdList.Add(rdr.GetInt32(0));
                 Console.WriteLine($"{rdr.GetInt32(0)}    {rdr.GetString(1)}    {rdr.GetInt32(2)}");
+                
             }
 
         }        
+
+        internal static bool CheckIfIdIsThere(int idCheck)
+        {
+            foreach (var i in IdList)
+            {
+                if (idCheck == i)
+                {
+                    return true;
+                }                         
+                   
+            }
+            Console.WriteLine("ID not in system. Please choose a new Id.");
+            return false;
+        }
     }
 }

@@ -8,11 +8,10 @@ namespace HabitTracker
             bool gameRunning = true;
             do
             {
-                Console.Clear();
                 Console.WriteLine($@"
 Menu
 _______________________________
-I - Enter steps for a new day.
+I - Enter steps.
 U - Update steps.
 D - Delete an entry.
 V - View all step entries.
@@ -24,16 +23,21 @@ _______________________________");
                 {
                     case "i":
                         Database.Insert();
+                        Console.Clear();
                         break;
                     case "v":
                         Helpers.ViewDB();
+                        Console.WriteLine("Hit Enter to continue.");
                         Console.ReadLine();
+                        Console.Clear();
                         break;
                     case "u":
                         Database.Update();
+                        Console.Clear();
                         break;
                     case "d":
                         Database.Delete();
+                        Console.Clear();
                         break;
                     case "0":
                         gameRunning = false;
