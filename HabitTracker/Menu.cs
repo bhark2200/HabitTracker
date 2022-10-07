@@ -12,7 +12,7 @@ namespace HabitTracker
 Menu
 _______________________________
 I - Enter steps.
-U - Update steps.
+U - Edit steps.
 D - Delete an entry.
 V - View all step entries.
 0 - Quit Program.
