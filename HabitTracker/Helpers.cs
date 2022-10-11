@@ -12,23 +12,20 @@ namespace HabitTracker
         {
             bool isNumber = true;
             int intToReturn;
-
-
             do
             {
                 Console.WriteLine(message);
                 var stringToParse = Console.ReadLine();
 
                 isNumber = int.TryParse(stringToParse, out intToReturn);
-                if (isNumber == false)
+                if (isNumber == false || intToReturn < 0)
                 {
                     Console.WriteLine("Invalid Input. Hit any key to reenter steps.");
                     Console.ReadLine();
                     Console.Clear();
-
                 }
 
-            } while (isNumber == false);
+            } while (isNumber == false || intToReturn < 0);
 
             return intToReturn;
         }
@@ -49,8 +46,7 @@ namespace HabitTracker
 ______________________________");
             
             while (rdr.Read())
-            {
-                
+            {                
                 IdList.Add(rdr.GetInt32(0));
                 Console.WriteLine($"{rdr.GetInt32(0)}    {rdr.GetString(1)}    {rdr.GetInt32(2)}");
                 
@@ -65,8 +61,7 @@ ______________________________");
                 if (idCheck == i)
                 {
                     return true;
-                }                         
-                   
+                }                  
             }
             Console.WriteLine("ID not in system. Please choose a new Id.");
             return false;

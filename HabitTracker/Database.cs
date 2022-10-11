@@ -28,17 +28,13 @@ namespace HabitTracker
 
         internal static void Insert()
         {
-
             Console.Clear();
 
             string date = DateTime.Now.ToString("d");
-
             var stepsForDay = Helpers.IsANumberEntered($"Please enter the amount of steps for today: {date}.");
 
-
             using (var connection = new SqliteConnection(connectionString))
-            {
-                
+            {                
                 using (var tableCmd = connection.CreateCommand())
                 {
                     connection.Open();
@@ -55,7 +51,6 @@ namespace HabitTracker
 
         internal static void Delete()
         {
-
             Console.Clear();
             bool idCheck;
             int rowToDelete;
@@ -87,7 +82,6 @@ namespace HabitTracker
 
         internal static void Update()
         {
-
             Helpers.ViewDB();
             int rowToUpdate;
             bool idCheck;
@@ -99,10 +93,8 @@ namespace HabitTracker
             
             var stepsToUpdate = Helpers.IsANumberEntered("Please enter steps to update.");
 
-
             using (var connection = new SqliteConnection(connectionString))
             {
-
                 using (var tableCmd = connection.CreateCommand())
                 {
                     connection.Open();
